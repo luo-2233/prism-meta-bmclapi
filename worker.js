@@ -92,12 +92,12 @@ export default {
 
     // ✅ /v1/packages/ 是 PrismLauncher 的包索引，原样代理，不做 BMCLAPI 替换
     //    里面的下载地址（GitHub / Modrinth CDN 等）本来也不在 BMCLAPI 覆盖范围内
-    if (!pathname.includes('/packages/')) {
-      for (const { regex, replacement } of REPLACEMENTS) {
+    if (!pathname.includes('/packages/') && !pathname.includes('/net/fabricmc/intermediary/')) {
+    for (const { regex, replacement } of REPLACEMENTS) {
         body = body.replace(regex, replacement);
-      }
-      body = stripIndexHashes(body);
     }
+    body = stripIndexHashes(body);
+}
 
     headers.set('Content-Type', 'application/json; charset=utf-8');
     headers.set('Cache-Control', 'public, max-age=86400');
